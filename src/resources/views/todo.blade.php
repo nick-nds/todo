@@ -1,5 +1,16 @@
 <x-master>
 
+  @php
+  if(isset($location)) {
+  if($location->geoplugin_status == 200) {
+  $currLocation = $geoplugin_city." - ".$geoplugin_region." - ".$geoplugin_countryName." - ".$geoplugin_continentName;
+  } else {
+  $currLocation = "Kolkata - West Bengal - India - Asia";
+  }
+  } else {
+  $currLocation = "Kolkata/West Bengal/India/Asia";
+  }
+  @endphp
   @section('title', 'Todo App - Add Todos')
   <h5>Add TodO</h5>
   <hr>
@@ -29,7 +40,7 @@
         <div class="row">
           <div class="my-3 col-12 col-md-6">
             <span class="mx-2">Location: </span>
-            <input type="text" value="{{ old('location') }}" name="location" placeholder="Location">
+            <input type="text" value="{{$currLocation }}" name="location" placeholder="Location">
             @error('location')
             <p class="text-danger text-sm">{{ $message }}</p>
             @enderror

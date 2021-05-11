@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\TodoController::class, 'index'])->name('home');
 Route::get('/todo', function () {
-    return view('todo');
+  $ip = $_SERVER['REMOTE_ADDR'];
+  $location = json_decode(file_get_contents('http://www.geoplugin.net/json.gp?ip='.$ip, true));
+  return view('todo', [
+    'location' => $location,
+  ]);
 })->name('add');
 Route::post('/todo', [App\Http\Controllers\TodoController::class, 'store']);
 
