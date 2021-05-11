@@ -1,43 +1,36 @@
 <x-master>
-
-  <h5>Add TodO</h5>
-  <hr>
-
-  <div class="border container">
-    <div class="container">
-      <form action="/todo" method="post">
-        @csrf
-        <div class="row">
-          <div class="my-3 col-12">
-            <span class="mx-2">Title: </span>
-            <input name="title" type="text" placeholder="Title">
-          </div>
+  @section('title', 'Todo App - Homepage')
+  <div class="container">
+      @if (session('status'))
+      <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ session('status') }}
+      </div>
+      @endif
+    <div class="row">
+      @foreach ($data as $todo)
+      <div class="col-12 col-md-4 card border-0" style="width:400px">
+        <div class="card-body">
+          <h4 class="card-title">{{ $todo->title }}</h4>
+          <p class="card-text">{{ $todo->description }}</p>
+          <p>
+            <span><b>Added on: </b> {{ $todo->created_at }}</span>
+          </p>
+          <p>
+            <span><b>Start Time: </b> {{ $todo->starttime }}</span>
+          </p>
+          <p>
+            <span><b>End Time: </b> {{ $todo->endtime }}</span>
+          </p>
+          <form action="delete/{{ $todo->id }}" method="post">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-link p-0 m-0 float-left">Mark Complete</button>
+          </form>
+          <a class="float-right mr-2" href="/edit/{{ $todo->id }}">Edit</a>
         </div>
-        <div class="row">
-          <div class="my-3 col-12">
-            <span class="mx-2">Description: </span>
-            <textarea id="" name="description" cols="" placeholder="Description" rows=""></textarea>
-          </div>
-        </div>
-        <div class="row">
-          <div class="my-3 col-12 col-md-6">
-            <span class="mx-2">Location: </span>
-            <input type="text" name="location" placeholder="Location">
-          </div>
-        </div>
-        <div class="row">
-          <div class="my-3 col-12 col-md-6">
-            <span class="mx-2">Start Time: </span>
-            <input type="text" value="<?php echo date('Y-m-d H:i:s'); ?>" name="starttime" placeholder="Start Time">
-          </div>
-          <div class="my-3 col-12 col-md-6">
-            <span class="mx-2">End Time: </span>
-            <input type="text" value="<?php echo date('Y-m-d H:i:s'); ?>" name="endtime" placeholder="End Time">
-          </div>
-        </div>
-        <button class="btn btn-primary">Submit</button>
-      </form>
+      </div>
+      @endforeach
     </div>
   </div>
-
 </x-master>

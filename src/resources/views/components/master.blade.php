@@ -16,12 +16,16 @@
   <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<title></title>
+<title>@yield('title')</title>
 </head>
 
 <body>
 
   <div id="app" class="container mt-5">
+    <div class="mb-4">
+      <a class="btn btn-link mx-2" href="/">View Todos</a>
+      <a class="btn btn-link mx-2" href="/todo">Add Todos</a>
+    </div>
     {{ $slot }}
   </div>
 
